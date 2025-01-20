@@ -23,11 +23,25 @@ public class ReadDataBasedOnFlag {
 
 		int noOfSheets = workbook.getNumberOfSheets();
 		for (int i = 0; i < noOfSheets; i++) {
-Kabilan
+			XSSFSheet sheet = workbook.getSheetAt(i);
+			String sheetName = sheet.getSheetName();
+			if (sheetName.equalsIgnoreCase("TestCase 2")) {
+				Iterator<Row> rows = sheet.iterator();
+				Row row = rows.next();
+				Iterator<Cell> cells = row.iterator();
+				while (cells.hasNext()) {
+					Cell cell = cells.next();
+					String cellValue = cell.getStringCellValue();
+					if (cellValue.equalsIgnoreCase("Data To Run")) {
+						columnIndex = k;
+						System.out.println("Column Index is " + columnIndex);
+					}
+					k++;
 				}
 
 				while (rows.hasNext()) {
-										if (rowData.getCell(columnIndex).getStringCellValue().equalsIgnoreCase("Y")) {
+					Row rowData = rows.next();
+					if (rowData.getCell(columnIndex).getStringCellValue().equalsIgnoreCase("Y")) {
 						Iterator<Cell> cellsData = rowData.iterator();
 						while (cellsData.hasNext()) {
 							Cell cellData = cellsData.next();
@@ -37,8 +51,6 @@ Kabilan
 							}else {
 								int cellValue = (int) cellData.getNumericCellValue();
 								System.out.println("Cell Value " + cellValue);
-System.out.println("Cell Value " + cellValue);
-
 							}
 						}
 					}
